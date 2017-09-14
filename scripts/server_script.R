@@ -87,4 +87,4 @@ dev.off()
 
 
 #test
-ggplot(facetdata, aes(x=Year, y=Temp, color = Temp)) + geom_line() +  facet_wrap(~ Ctry)
+#ggplot(facetdata, aes(x=Year, y=Temp, color = Temp)) + geom_line() +  facet_wrap(~ Ctry)
