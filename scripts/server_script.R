@@ -28,18 +28,13 @@ data %>%
   filter(Year>1930) -> data1
 
 # ====================================================================================
+# Collate all country specific data
+
 data1 %>% 
   group_by(Year) %>%
   filter(Country=='India') %>%
   summarise(Temp = mean(AverageTemperature)) %>%
   cbind(Ctry = 'India')  -> d_ind
-
-# Plot area. 
-png(filename="plots/ind.png")
-ggplot(d_ind, aes(x=Year, y=Temp)) + geom_path(colour = "grey50") + geom_point(aes(colour=Year))
-dev.off()
-# ====================================================================================
-# Collate all country specific data
 
 data1 %>% 
   group_by(Year) %>%
@@ -78,13 +73,18 @@ data1 %>%
   cbind(Ctry = 'Australia')-> d_aus
 
 facetdata <- rbind(d_aus,d_bra,d_can,d_chi,d_ind,d_rus,d_us)
-
-# Plot area. 
-png(filename="plots/facet.png")
-ggplot(facetdata, aes(x=Year, y=Temp))+ geom_path(colour = "grey50") + geom_point(aes(colour=Year)) + facet_wrap(~ Ctry)
-dev.off()
+#rm(d_aus,d_bra,d_can,d_chi,d_ind,d_rus,d_us)
 # ====================================================================================
+# Plot area. 
+png(filename="plots/ind.png")
+ggplot(d_ind, aes(x=Year, y=Temp)) + geom_path(colour = "grey50") + geom_point(aes(colour=Year))
+dev.off()
 
 
+png(filename="plots/facet.png")
+ggplot(facetdata, aes(x=Year, y=Temp))+ geom_path(colour = "grey50") + geom_point(aes(colour=Temp)) + facet_wrap(~ Ctry)
+dev.off()
 
 
+#test
+ggplot(facetdata, aes(x=Year, y=Temp, color = Temp)) + geom_line() +  facet_wrap(~ Ctry)
